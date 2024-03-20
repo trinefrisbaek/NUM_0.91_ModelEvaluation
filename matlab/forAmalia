@@ -1,0 +1,27 @@
+
+%% Decide which parameters to use in the sensitivity study
+nrRandIter=4;
+theParam={'bL','bN','bDOC','bF','bG'};
+randParam=nan(nrRandIter,length(theParam);
+
+
+
+
+for itnr=1:nrRandIter
+    copyfile ../input/input_orig.nlm ../input/input.nlm
+
+        system(['C:\cygwin64\bin\sed.exe "s/.*bL.*/      bL = ',num2str(randParam(itnr,1)),'/" ../input/input.nlm > ../input/tmp1.nlm']);
+        system(['C:\cygwin64\bin\sed.exe "s/.*bN.*/      bN = ',num2str(randParam(itnr,2)),'/" ../input/tmp1.nlm > ../input/tmp.nlm']);
+        system(['C:\cygwin64\bin\sed.exe "s/.*bDOC.*/      bDOC = ',num2str(randParam(itnr,1)),'/" ../input/tmp.nlm > ../input/tmp1.nlm']);
+        system(['C:\cygwin64\bin\sed.exe "s/.*bF.*/      bF = ',num2str(randParam(itnr,2)),'/" ../input/tmp1.nlm > ../input/tmp.nlm']);
+        system(['C:\cygwin64\bin\sed.exe "s/.*bG.*/      bG = ',num2str(randParam(itnr,1)),'/" ../input/tmp.nlm > ../input/tmp1.nlm']);
+
+        movefile ../input/tmp1.nlm ../input/input.nlm
+
+    end
+    
+    p = setupGeneralists(n,nPOM);
+    p = parametersWatercolumn(p);
+    ...
+           simOutput = simulateWatercolumn(p, lat(p_point),lon(p_point));
+   
